@@ -4,5 +4,9 @@
     </head>
     <body>
         <h1>Person: <%= ID %></h1>
+        <!-- locals gives you access to params object in render argument -->
+        <% if (locals.Qstr !== undefined) {  %>
+        <h2>Query string: <%= Qstr %></h2>
+        <% } %>
     </body>
 </html>

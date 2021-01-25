@@ -1,8 +1,35 @@
-<html>
+<html lang="">
     <head>
         <link rel="stylesheet" href="/assets/style.css" type="text/css">
+        <title></title>
     </head>
     <body>
         <h1>Hello Express!</h1>
+        <h2>Submit Body</h2>
+        <form method="POST" action="/person">
+            First name: <input type="text" id="firstname" name="firstname">
+            <br/>
+            Last name: <input type="text" id="lastname" name="lastname">
+            <br />
+            <input type="submit">
+        </form>
+        <h2>Submit JSON</h2>
+        <form method="POST" action="/personjson">
+            First name: <input type="text" id="firstname" name="firstname">
+            <br/>
+            Last name: <input type="text" id="lastname" name="lastname">
+            <br />
+            <input type="submit">
+        </form>
+        <script>
+            fetch("http://localhost:3000/personjson", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({firstname: "Bob", lastname: "Ross"})
+            })
+        </script>
     </body>
 </html>

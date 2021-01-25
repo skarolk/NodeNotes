@@ -4,6 +4,10 @@ const fs = require("fs");
 const express = require("express");
 // Used to parse browser cookies
 const cookieParser = require("cookie-parser");
+// Used to parse body
+const bodyParser = require("body-parser");
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+const jsonParser = bodyParser.json();
 // Popular library for authenticating user (works with OAuth)
 const passport = require("passport");
 
@@ -119,4 +123,26 @@ app.get("/person/:id", (req, res) => {
   // Render also takes a second argument of and object that can be used to map data to views
   // This object is typically referred to as the model
   res.render("person", { ID: req.params.id });
+});
+
+// Query string example
+app.get("/querystring/person/:id", (req, res) => {
+  // query strings accessible through req object
+  res.render("person", { ID: req.params.id, Qstr: req.query.qstr });
+});
+
+// body-parser body example
+app.post("/person", urlencodedParser, (req, res) => {
+  res.send("Thank you!");
+  // urlencodedParser from body-parser is creating body object used in logs
+  console.log("parsed body" + req.body.firstname);
+  console.log("parsed body" + req.body.lastname);
+});
+
+// body-parser JSON example
+app.post("/personjson", jsonParser, (req, res) => {
+  res.send("Thank you for the JSON Data!");
+  // urlencodedParser from body-parser is creating body object used in logs
+  console.log("parsed JSON" + req.body.firstname);
+  console.log("parsed JSON" + req.body.lastname);
 });

@@ -146,3 +146,11 @@ app.post("/personjson", jsonParser, (req, res) => {
   console.log("parsed JSON" + req.body.firstname);
   console.log("parsed JSON" + req.body.lastname);
 });
+
+// RESTful API example
+// get from database
+app.get("/api/person/:id");
+// save to database
+app.post("/api/person");
+// delete from database
+app.delete("/api/person/:id");

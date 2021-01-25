@@ -1,0 +1,23 @@
+{
+  "name": "node-server-practice",
+  "version": "1.0.0",
+  "description": "messing around with node and express",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skarolk/MessingWithNode.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skarolk/MessingWithNode/issues"
+  },
+  "homepage": "https://github.com/skarolk/MessingWithNode#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.29.1"
+  }
+}

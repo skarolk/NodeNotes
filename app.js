@@ -20,7 +20,7 @@ http
   })
   .listen(2001, "127.0.0.1");
 
-// Handling JSON object
+// Handling JSON data
 http
   .createServer((req, res) => {
     res.writeHead(200, { "Content-Type": "application/json" });
@@ -29,7 +29,7 @@ http
   })
   .listen(2002, "127.0.0.1");
 
-// Specifying URL behavior
+// Specifying URL behavior - routing
 http
   .createServer((req, res) => {
     if (req.url === "/api") {

@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/skarolk/MessingWithNode#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "passport": "^0.4.1"
   }
 }

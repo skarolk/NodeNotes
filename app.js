@@ -2,6 +2,12 @@ const http = require("http");
 const fs = require("fs");
 // Invoking express right away IS NOT convention so that you can instantiate multiple apps
 const express = require("express");
+// Used to parse browser cookies
+const cookieParser = require("cookie-parser");
+// Popular library for authenticating user (works with OAuth)
+const passport = require("passport");
+
+// Convention for pulling port form .env
 const port = process.env.PORT || 3000;
 
 // The word "app" is purely convention
@@ -13,6 +19,8 @@ const app = express();
 const moment = require("moment");
 // Output day, time and AM/PM (e.g. Wed, 8PM)
 console.log(moment().format("ddd, hA"));
+
+const jsonObj = { firstname: "bob", lastname: "ross" };
 
 // Basic node server
 http
@@ -47,8 +55,7 @@ http
   .createServer((req, res) => {
     if (req.url === "/api") {
       res.writeHead(200, { "Content-Type": "application/json" });
-      const obj = { firstname: "bob", lastname: "ross" };
-      res.end(JSON.stringify(obj));
+      res.end(JSON.stringify(jsonObj));
     } else {
       res.writeHead(200, { "Content-Type": "text/html" });
       fs.createReadStream(__dirname + "/indexPipe.html").pipe(res);
@@ -59,12 +66,57 @@ http
 // Express port
 app.listen(port);
 
+// Express templating engine
+// EJS is similar to ruby's ERB (ice cream cones and squids)
+app.set("view engine", "ejs");
+
+// Express middleware
+// Any static file in public will be available by using "/assets" or whatever you name the path
+// <link rel="stylesheet" href="assets/style.css"> added to indexPipe.html
+app.use("/assets", express.static(__dirname + "/public"));
+
+// cookie-parser middleware
+app.use(cookieParser());
+
+// To make your own middleware
+// Leave off route ("/") to run code inside use for every request
+app.use("/", (req, res, next) => {
+  console.log("Request URL: " + req.url);
+  // Cookie coming from cookie-parser
+  console.log("Cookie: " + JSON.stringify(req.cookies));
+  // Next tells it to run the next middleware
+  next();
+});
+
 // Express get
-app.get("/", (req, res) => {
+app.get("/test", (req, res) => {
   // res.send("<html></html>") can have html passed directly in
   // res.sendFile can take a path to a file
   res.sendFile(__dirname + "/indexPipe.html");
 });
 
+app.get("/api", (req, res) => {
+  res.json(jsonObj);
+});
+
+app.get("/person/test/:id", (req, res) => {
+  // :id is a param
+  res.send(req.params.id);
+});
+
 // Express post
-app.post("/", (req, res) => {});
+app.post("/", (req, res) => {
+  // Multiple http verbs can be used by same endpoints to run different code
+});
+
+// Using EJS templating engine
+app.get("/", (req, res) => {
+  // Render will look in views folder
+  res.render("index");
+});
+
+app.get("/person/:id", (req, res) => {
+  // Render also takes a second argument of and object that can be used to map data to views
+  // This object is typically referred to as the model
+  res.render("person", { ID: req.params.id });
+});

@@ -69,7 +69,6 @@ http
 
 // Express port
 app.listen(port);
-
 // Express templating engine
 // EJS is similar to ruby's ERB (ice cream cones and squids)
 app.set("view engine", "ejs");
